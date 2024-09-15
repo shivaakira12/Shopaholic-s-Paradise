@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Home - Groco</title>
+</head>
+
+<body>
+	<section>
+		<div class="home-bg">
+			<section class="home">
+				<div class="content">
+					<span>don't panic, go organice</span>
+					<h3>Reach For A Healthier You With Organic Foods</h3>
+					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto natus culpa officia quasi,
+						accusantium explicabo?</p>
+					<a href="/about" class="btn">about us</a>
+				</div>
+			</section>
+		</div>
+	</section>
+	<section class="products">
+		<h1 class="title">Latest Products</h1>
+		<div class="box-container">
+			<div th:each="product : ${latestProducts}" class="box">
+				<div class="price">$<span th:text="${product.discountPrice}">120</span>/-</div>
+				<img th:src="@{'/images/product_images/'+${product.image}}" alt="product_image">
+				<div class="name" th:text="${product.producttitle}">productname</div>
+				<input type="hidden" name="pid" th:value="${product.id}">
+				<input type="hidden" name="p_name" th:value="${product.producttitle}">
+				<input type="hidden" name="p_price" th:value="${product.productprice}">
+				<input type="hidden" name="p_image" th:value="${product.image}">
+				<a class="btn" th:href="@{'/product/'+${product.id}}">watchout</a>
+			</div>
+		</div>
+		<!--Pagination code-->
+		<div class="pagination-container">
+			<div class="total-products">Total Orders: [[${totalElements}]]</div>
+			<div class="pagination">
+				<!-- Previous Page Button -->
+				<a th:href="@{'/admin/loadAdminOrders?pageNo=' + ${pageNo - 1}}"
+					th:classappend="${isFirst} ? 'disabled' : ''">&laquo;</a>
+
+				<!-- Page Number Links -->
+				<a th:each="i : ${#numbers.sequence(1, totalPages)}"
+					th:href="@{'/admin/loadAdminOrders?pageNo=' + ${i - 1}}"
+					th:classappend="${pageNo == i - 1} ? 'active' : ''">[[${i}]]</a>
+
+				<!-- Next Page Button -->
+				<a th:href="@{'/admin/loadAdminOrders?pageNo=' + ${pageNo + 1}}"
+					th:classappend="${isLast} ? 'disabled' : ''">&raquo;</a>
+			</div>
+		</div>
+	</section>
+	</section>
+</body>
+
+</html>

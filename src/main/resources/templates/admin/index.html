@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{adminHeader::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+
+<body>
+	<section class="dashboard">
+		<h1 class="title">dashboard</h1>
+		<div class="box-container">
+			<div class="box">
+				<h3 th:text="${totalElements}"></h3>
+				<p>added categories</p>
+				<a href="/admin/loadAddCategory" class="btn">add category</a>
+			</div>
+			<div class="box">
+				<p>total categories</p>
+				<a href="/admin/loadAddCategory" class="btn">see category</a>
+			</div>
+			<div class="box">
+				<p>products added</p>
+				<a href="/admin/loadAddProduct" class="btn">add products</a>
+			</div>
+			<div class="box">
+				<p>added products</p>
+				<a href="/admin/loadViewProduts" class="btn">see products</a>
+			</div>
+			<div class="box">
+				<p>total messages</p>
+				<a href="/admin/supportmessages" class="btn">see messages</a>
+			</div>
+			<div class="box">
+				<p>total users</p>
+				<a href="/admin/loadUsers" class="btn">see users</a>
+			</div>
+
+		</div>
+	</section>
+</body>
+
+</html>

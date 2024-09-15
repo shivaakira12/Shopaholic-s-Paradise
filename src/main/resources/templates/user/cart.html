@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Cart :: Groco</title>
+</head>
+
+<body>
+	<section>
+		<table>
+			<thead>
+				<tr>
+					<th data-label="SL No">SL No</th>
+					<th data-label="Image">Image</th>
+					<th data-label="Product Name">Product Name</th>
+					<th data-label="Price">Price</th>
+					<th data-label="Quantity">Quantity</th>
+					<th data-label="Total Price">Total Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${#lists.isEmpty(carts)}">
+					<td colspan="6" style="text-align:center;">Your cart is empty</td>
+				</tr>
+				<tr th:each="cart, c : ${carts}">
+					<td data-label="SL No">[[${c.count}]]</td>
+					<td><img th:src="@{'/images/product_images/'+${cart.product.image}}" width="70px" height="70px">
+					</td>
+					<td data-label="Product Name">[[${cart.product.producttitle}]]</td>
+					<td data-label="Price">&#8377; [[${cart.product.discountPrice}]]</td>
+					<td data-label="Quantity">
+						<a th:href="@{'/user/cartQuantityUpdate?sy=de&cid='+${cart.id}}">
+							<i class="fa-solid fa-minus"></i>
+						</a>
+						[[${cart.quantity}]]
+						<a th:href="@{'/user/cartQuantityUpdate?sy=in&cid='+${cart.id}}">
+							<i class="fa-solid fa-plus"></i>
+						</a>
+					</td>
+					<td data-label="Total Price">&#8377; [[${cart.totalPrice}]]</td>
+				</tr>
+				<tr class="total-price-row" th:if="${!#lists.isEmpty(carts)}">
+					<td colspan="5" class="total-price-label">Total Price</td>
+					<td class="total-price-value">&#8377; [[${totalOrderPrice}]]</td>
+				</tr>
+				<tr th:if="${#lists.isEmpty(carts)}">
+					<td colspan="6" style="text-align:center;">
+						<a href="/products" class="continue-shopping">Continue Shopping</a>
+					</td>
+				</tr>
+				<tr th:if="${!#lists.isEmpty(carts)}">
+					<td colspan="6" style="text-align:center;">
+						<a href="/user/orders" class="proceed-to-payment">Proceed to Payment</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+</body>
+
+</html>

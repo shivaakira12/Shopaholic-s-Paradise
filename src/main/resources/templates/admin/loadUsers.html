@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{adminHeader::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Users - Admin</title>
+</head>
+
+<body>
+	<section>
+		<section class="user-accounts">
+			<h1 class="title">user messages</h1>
+			<th:block th:if="${session.successMsg}">
+				<p style="color: green;font-size: 1.5rem;text-align: center;">[[${session.successMsg}]]</p>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+<br>
+			<th:block th:if="${session.errorMsg}">
+				<p style="color: red;font-size: 1.5rem;">[[${session.errorMsg}]]</p>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+			<div class="box-container">
+
+				<div th:each="user : ${listofUsers}" class="box">
+					<img th:src="@{'/images/profile_images/'+${user.profileImage}}" />
+					<p> User ID : <span th:text="${user.id}"></span></p>
+					<p> User Name : <span th:text="${user.name}"></span></p>
+					<p> User Email : <span th:text="${user.email}"></span></p>
+					<p> User type : <span th:text="${user.role}" style=" color :'orange';"></span></p>
+					<p> IsEnabled : <span th:text="${user.isEnabled}"></span></p>
+					<a th:href="@{'/admin/updateStatus?isEnabled=true&id='+${user.id}}" class="option-btn">Active</a>
+					<a th:href="@{'/admin/deleteUser/'+${user.id}}" class="delete-btn"
+						onclick="return confirm('delete this product?'); " style="display: none;">delete</a>
+					<a th:href="@{'/admin/updateStatus?isEnabled=false&id='+${user.id}}" class="option-btn">InActive</a>
+				</div>
+			</div>
+		</section>
+	</section>
+</body>
+
+</html>

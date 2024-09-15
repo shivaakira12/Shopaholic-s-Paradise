@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>View Products</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<section>
+		<div class="custom-container">
+			<th:block th:if="${session.successMsg}">
+				<script th:inline="javascript">
+					/*<![CDATA[*/
+					Toastify({
+						text: '[[${session.successMsg}]]',
+						backgroundColor: "green",
+						duration: 1000,
+						style: {
+							fontSize: '1rem'
+						}
+					}).showToast();
+            /*]]>*/
+				</script>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+
+			<th:block th:if="${session.errorMsg}">
+				<script th:inline="javascript">
+					/*<![CDATA[*/
+					Toastify({
+						text: '[[${session.errorMsg}]]',
+						backgroundColor: "red",
+						duration: 1000, style: {
+							fontSize: '1rem'
+						}
+					}).showToast();
+            /*]]>*/
+				</script>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+			<div class="custom-product-details">
+				<h2 class="title">Product Details</h2>
+				<div class="custom-product-info">
+					<div class="custom-product-image">
+						<img alt="Product Image" th:src="@{'/images/product_images/' + ${product.image}}">
+					</div>
+					<div class="custom-product-description">
+						<h3 th:text="${product.producttitle}"></h3>
+						<p><strong>Price:</strong> $ <span th:text="${product.discountPrice}"></span><span
+								style="color: red;font-weight: bold;"> $<span th:text="${product.productprice}"
+									style="color: red;font-weight: bold;text-decoration: line-through;"></span></span>
+							<span th:text="${product.discount}" style="color: orange;font-weight: bold;"></span>%off
+						</p>
+						<p><strong>Description:</strong> <span th:text="${product.productdescription}"></span></p>
+						<p><strong>Status:</strong>
+							<th:block th:if="${product.productStock > 0}">
+								<span
+									style="background-color: #666;color: #fff;padding: 3px;border-radius: 0.5rem;">Available</span>
+							</th:block>
+							<th:block th:unless="${product.productStock > 0}">
+								<span>Out of stock</span>
+							</th:block>
+						</p>
+						<p><strong>Category:</strong> <span th:text="${product.category}"></span></p>
+						<th:block th:if="${product.productStock > 0}">
+							<th:blcock th:if="${user==null}">
+								<br><a href="/signin"
+									style="padding: 10px 20px; font-size: 2rem; background-color: #27ae60;color: #fff;border-radius: 0.5rem;">Add
+									to Cart</a>
+							</th:blcock>
+							<th:blcock th:unless="${user==null}">
+								<br><a th:href="@{'/user/addCart?pid='+${product.id}+'&uid='+${user.id}}"
+									style="padding: 10px 20px; font-size: 2rem; background-color: #27ae60;color: #fff;border-radius: 0.5rem;">Add
+									to Cart</a>
+							</th:blcock>
+						</th:block>
+						<th:block th:unless="${product.productStock > 0}">
+							<button disabled>Out of stock</button>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>

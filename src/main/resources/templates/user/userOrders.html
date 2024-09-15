@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Order :: Groco</title>
+</head>
+
+<body>
+	<section class="table-section">
+		<table class="responsive-table">
+			<thead>
+				<tr>
+					<th>Order Id</th>
+					<th>Order Date</th>
+					<th>Product Details</th>
+					<th>Quantity</th>
+					<th>Status</th>
+					<th>Price</th>
+					<th style="width: auto;">Cancel</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="userOrders: ${ordersByUser}">
+					<td>[[${userOrders.orderId}]]</td>
+					<td>[[${userOrders.orderDate}]]</td>
+					<td>[[${userOrders.product.producttitle}]]</td>
+					<td>[[${userOrders.quantity}]]</td>
+					<td>[[${userOrders.status}]]</td>
+					<td>[[${userOrders.quantity}]] * [[${userOrders.price}]] = [[${userOrders.quantity *
+						userOrders.price}]]</td>
+					<td>
+						<th:block th:if="${userOrders.status!='Cancelled'}">
+							<a th:href="@{'/user/updateOrderStatus?id='+${userOrders.id}+'&st=6' }"
+								class="view-btn">X</a>
+						</th:block>
+						<th:block th:unless="${userOrders.status!='Cancelled'}">
+							<a href="javascript:void(0);" class="view-btn disabled" style="width: 100%;">X</a>
+						</th:block>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="pagination-container">
+			<div class="total-products">Total Orders: [[${totalElements}]]</div>
+				<div class="pagination">
+					<!-- Previous Page Button -->
+					<a th:href="@{'/user/userOrders?pageNo=' + ${pageNo - 1}}"
+						th:classappend="${isFirst} ? 'disabled' : ''">&laquo;</a>
+
+					<!-- Page Number Links -->
+					<a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{'/user/userOrders?pageNo=' + ${i - 1}}"
+						th:classappend="${pageNo == i - 1} ? 'active' : ''">[[${i}]]</a>
+
+					<!-- Next Page Button -->
+					<a th:href="@{'/user/userOrders?pageNo=' + ${pageNo + 1}}"
+						th:classappend="${isLast} ? 'disabled' : ''">&raquo;</a>
+				</div>
+		</div>
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th"http://www.thymeleaf.org" th:fragment="Layout(content)">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Admin - Groco</title>
+	<link rel="stylesheet" th:href="@{/css/admin_style.css}">
+	<!--font awesome cdn link-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+		integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+	<!--NavBar Code Starts Here-->
+	<header class="header">
+		<div class="flex">
+			<a href="/admin/" class="logo"> <i class="fa-solid fa-user-tie" style="color: #27ae66;"></i>&nbsp;Admin
+				<span>Panel</span> </a>
+			<nav class="navbar">
+				<a href="/admin/">home</a>
+				<a href="/admin/loadViewProduts">products</a>
+				<a href="/admin/loadAdminOrders">orders</a>
+				<a href="/admin/loadUsers">users</a>
+				<a href="/admin/supportmessages">support messages</a>
+			</nav>
+			<div class="icons">
+				<div id="menu-btn" class="fas fa-bars"></div>
+				<div id="user-btn" class="fas fa-user"></div>
+			</div>
+			<div class="profile">
+				<!--	<img th:src="@{'/images/profile_images/'+${user.profileImage}}" alt="Profile Image"  />-->
+				<!-- <a href="" class="btn">update profile</a> -->
+				<a href="/logout" class="delete-btn">logout</a>
+				<div class="flex-btn"></div>
+			</div>
+		</div>
+	</header>
+	<div th:replace="${content}"></div>
+	<!--Footer Code Starts Here-->
+	<footer class="footer">
+
+		<section class="box-container">
+
+			<div class="box">
+				<h3>quick links</h3>
+				<a href="/"> <i class="fas fa-angle-right"></i> home</a>
+				<a href=""> <i class="fas fa-angle-right"></i> shop</a>
+				<a href=""> <i class="fas fa-angle-right"></i> about</a>
+				<a href="/admin/supportmessages"> <i class="fas fa-angle-right"></i> support messages</a>
+			</div>
+
+			<div class="box">
+				<h3>extra links</h3>
+				<a href=""> <i class="fas fa-angle-right"></i> cart</a>
+				<a href=""> <i class="fas fa-angle-right"></i> login</a>
+				<a href=""> <i class="fas fa-angle-right"></i> register</a>
+			</div>
+
+			<div class="box">
+				<h3>contact info</h3>
+				<p> <i class="fas fa-phone"></i> +123-456-7890 </p>
+				<p> <i class="fas fa-phone"></i> +111-222-3333 </p>
+				<p> <i class="fas fa-envelope"></i> groco@gmail.com </p>
+				<p> <i class="fas fa-map-marker-alt"></i> andhra pradesh, india - 400104 </p>
+			</div>
+
+			<div class="box">
+				<h3>follow us</h3>
+				<a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+				<a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+				<a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+				<a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+			</div>
+
+		</section>
+
+		<p class="credit"> &copy; copyright @
+			2024 by <span>mr. shiva</span> | all rights reserved!
+		</p>
+
+	</footer>
+	<!--Footer Code Ends Here-->
+	<script th:src="@{/javascript/script.js}"></script>
+</body>
+
+</html>

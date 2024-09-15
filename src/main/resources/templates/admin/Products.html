@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{adminHeader::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>View Produts</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<section>
+		<section class="show-products">
+			<h1 class="title">products added</h1>
+
+			<div class="box-container">
+				<th:block th:if="${session.deleteMsg}">
+					<p style="color: green;">[[${session.deleteMsg}]]</p>
+					<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+				</th:block>
+
+				<div class="box" th:each="p,c:${allProducts}">
+					<div class="price">[[${p.productprice}]]</div>
+					<img th:src="@{'/images/product_images/'+${p.image}}" alt="" width="65px">
+					<div class="name">[[${p.producttitle}]]</div>
+					<div class="cat">[[${p.category}]]</div>
+					<div class="details">
+						<p>Discount: [[${p.discount}]]</p>
+						<p>Discount Price: [[${p.discountPrice}]]</p>
+						<p>Status: [[${p.isActive}]]</p>
+						<p>Stock: [[${p.productStock}]]</p>
+					</div>
+					<div class="flex-btn">
+						<a th:href="@{'/admin/editProduct/'+${p.id}}" class="option-btn">update</a>
+						<a th:href="@{'/admin/deleteProduct/'+${p.id}}" class="delete-btn"
+							onclick="return confirm('delete this product?');">delete</a>
+					</div>
+				</div>
+			</div>
+			<!--Pagination code-->
+			
+			<div class="pagination-container">
+				<div class="total-products">Total Products: [[${totalElements}]]</div>
+				<div class="pagination">
+					<!-- Previous Page Button -->
+					<a th:href="@{'/admin/loadViewProduts?pageNo=' + ${pageNo - 1}}"
+						th:classappend="${isFirst} ? 'disabled' : ''">&laquo;</a>
+
+					<!-- Page Number Links -->
+					<a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{'/admin/loadViewProduts?pageNo=' + ${i - 1}}"
+						th:classappend="${pageNo == i - 1} ? 'active' : ''">[[${i}]]</a>
+
+					<!-- Next Page Button -->
+					<a th:href="@{'/admin/loadViewProduts?pageNo=' + ${pageNo + 1}}"
+						th:classappend="${isLast} ? 'disabled' : ''">&raquo;</a>
+				</div>
+			</div>
+		</section>
+	</section>
+</body>
+
+</html>

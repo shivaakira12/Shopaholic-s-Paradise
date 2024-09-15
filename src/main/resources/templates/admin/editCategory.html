@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{adminHeader::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Edit Category</title>
+</head>
+
+<body>
+	<section>
+		<div class="add-category-container">
+			<h2>Edit Category</h2>
+			<th:block th:if="${session.successMsg}">
+				<p style="color: green;">[[${session.successMsg}]]</p>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+
+			<th:block th:if="${session.errorMsg}">
+				<p style="color: red;">[[${session.errorMsg}]]</p>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+			<form class="upload-form" action="/admin/updateCategory" method="post" enctype="multipart/form-data">
+				<input type="hidden" th:value="${category.id}" name="id">
+				<div class="form-group">
+					<label for="category">Category:</label>
+					<input type="text" id="category" name="categoryName" placeholder="Enter category" th:value="${category.categoryName}" required>
+				</div>
+				<div class="form-group">
+					<label for="file">Choose File:</label>
+					<input type="file" id="file" name="file" accept="image/*">
+				</div>
+				<img th:src="@{'/images/category_images/'+${category.imageName}}" width="100px" />
+				<div class="form-group">
+					<label for="category">Status:</label>
+					<input type="radio" name="isActive" value="active" th:checked="${category.isActive==true}">
+					Active
+					<input type="radio" name="isActive" value="inactive" th:checked="${category.isActive==false}">
+					Inactive
+				</div>
+				<button class="add-category-btn" type="submit">Add</button>
+			</form>
+		</div>
+	</section>
+</body>
+
+</html>

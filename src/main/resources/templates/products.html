@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::Layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="container">
+        <!-- Search Bar Section -->
+        <section class="search-form">
+            <form action="" method="POST" onsubmit="return false;">
+                <input type="text" class="box" name="search_box" placeholder="Search products..." id="searchBox">
+            </form>
+        </section>
+
+        <!-- Main Content Section -->
+        <section class="main-content">
+            <!-- Categories Section -->
+            <section class="p-category">
+                <a href="/products">All</a>
+                <a th:each="c : ${categories}" th:href="@{'/products?category='+${c.categoryName}}">
+                    [[${c.categoryName}]]
+                </a>
+            </section>
+
+            <!-- Products Section -->
+            <section class="products-section">
+                <div class="container" id="productsContainer">
+                    <th:block th:if="${productSize > 0}">
+                        <main class="products">
+                            <div class="box-container">
+                                <!-- Iterate over products -->
+                                <div class="box product" th:each="p : ${products}">
+                                    <div class="price">$<span th:text="${p.discountPrice}"></span></div>
+                                    <img alt="Product Image" th:src="@{'/images/product_images/' + ${p.image}}">
+                                    <div class="name" th:text="${p.producttitle}"></div>
+                                    <span style="text-decoration: line-through; font-size: 2.5rem;">$ <span th:text="${p.productprice}"></span></span>
+                                    <span class="discount" style="font-size: 1.5rem; color: darkorange;">$<span th:text="${p.discount}" style="font-size: 1.5rem;"></span> off</span><br><br>
+                                    <a class="btn" th:href="@{'/product/' + ${p.id}}">View Details</a>
+                                </div>
+                            </div>
+                        </main>
+                    </th:block>
+                    <th:block th:unless="${productSize > 0}">
+                        <span class="no-products" style="font-size: 3rem; display: flex;justify-content: center;color: red;">Products Not Available</span>
+                    </th:block>
+                </div>
+                <div id="noItemsMessage" style="display:none; text-align: center;font-size: 2.5rem;color: red;">No items found</div>
+            </section>
+        </section>
+
+        <!-- Pagination Section -->
+        <section class="pagination-container">
+            <div class="total-products">Total Products: [[${totalElements}]]</div>
+            <th:block th:if="${productSize > 0}">
+                <div class="pagination">
+                    <a th:href="@{'/products?pageNo=' + ${pageNo - 1}}" th:classappend="${isFirst} ? 'disabled' : ''">&laquo;</a>
+                    <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{'/products?pageNo=' + ${i - 1}}" th:classappend="${pageNo == i - 1} ? 'active' : ''">[[${i}]]</a>
+                    <a th:href="@{'/products?pageNo=' + ${pageNo + 1}}" th:classappend="${isLast} ? 'disabled' : ''">&raquo;</a>
+                </div>
+            </th:block>
+        </section>
+    </section>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{adminHeader::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+
+<body>
+	<section class="messages">
+
+		<h1 class="title">messages</h1>
+
+		<div class="box-container">
+			<div th:each="message : ${messages}" class="box">
+				<p> message id : <span th:text="${message.id}"></span> </p>
+				<p> name : <span th:text="${message.name}"></span> </p>
+				<p> number : <span th:text="${message.number}"></span> </p>
+				<p> email : <span th:text="${message.email}"></span> </p>
+				<p> message : <span th:text="${message.msg}"></span> </p>
+				<a th:href="@{/admin/supportMessage/{id}(id=${message.id})}" onclick="return confirm('delete this message?');"
+					class="delete-btn">delete</a>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

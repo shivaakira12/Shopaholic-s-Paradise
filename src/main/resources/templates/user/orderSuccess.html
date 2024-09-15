@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Order :: Groco</title>
+</head>
+
+<body>
+	<section>
+		<div id="order-confirmation" class="order-success" style="border-radius: 0.5rem;">
+			<h1 style="font-size: 2rem;text-align: center;color: #27ae60;">Order Successfully Placed</h1><br>
+			<p style="font-size: 2rem;text-align: center;color: #000;">Your order will be delivered within 3 days</p>
+			<div style="text-align: center; margin-top: 20px;">
+				<a href="/" class="order btn-home">Shop More</a>
+				<a href="/user/userOrders" class="order btn-orders">Orders</a>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

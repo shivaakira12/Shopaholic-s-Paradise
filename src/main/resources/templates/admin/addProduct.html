@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{adminHeader::Layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Add Product</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+</body>
+
+<section class="add-products">
+	<h1 class="title">add new product</h1>
+	<form action="/admin/saveProduct" method="post" enctype="multipart/form-data">
+		<th:block th:if="${session.successMsg}">
+			<p style="color: green;">[[${session.successMsg}]]</p>
+			<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+		</th:block>
+
+		<th:block th:if="${session.errorMsg}">
+			<p style="color: red;">[[${session.errorMsg}]]</p>
+			<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+		</th:block>
+		<div class="flex">
+			<div class="inputBox">
+				<input type="text" name="producttitle" class="box" required placeholder="enter product name" />
+				<input type="number" name="productprice" class="box" required placeholder="enter product price" />
+				<input type="number" name="discount" class="box" required placeholder="enter product discount" />
+				<input type="number" name="productStock" class="box" required placeholder="enter product stock" />
+				<input type="number" name="discountPrice" class="box" readonly
+					placeholder="enter product discount price" />
+			</div>
+			<div class="inputBox">
+				<select name="category" class="box" required>
+					<option value="" selected disabled>select category</option>
+					<option th:each="c : ${categories}" th:value="${c.categoryName}">[[${c.categoryName}]]</option>
+				</select>
+				<input type="file" name="file" required class="box" accept="image/jpg, image/jpeg, image/png" />
+				<input type="radio" name="isActive" value="active" checked />
+				Active
+				<input type="radio" name="isActive" value="inactive" />
+				Inactive
+			</div>
+		</div>
+		<textarea name="productdescription" class="box" required placeholder="enter product details" cols="30"
+			rows="10"></textarea>
+		<input type="submit" class="btn" value="add product" name="add_product" />
+	</form>
+</section>
+
+</html>
